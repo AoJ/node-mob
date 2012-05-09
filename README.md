@@ -34,7 +34,6 @@ require('mob')
 
     .role('back',  "./background-worker.js", {workers: 4})
     .role('front', "./http-server.js", {workers: 2});
-
 ```
 
 `$ node main` will launch this script in as a Kingpin,
@@ -49,7 +48,6 @@ console.log('Background worker ' + process.pid + ' running.' );
 exports.foo = function () {
   console.log('Bar! My pid is ' + process.pid);
 };
-
 ```
 
 **http-server.js**
@@ -78,7 +76,6 @@ http.createServer(function (req, res) {
 
 }).listen(1337, "127.0.0.1");
 console.log('Server ' + process.pid + ' running at http://127.0.0.1:1337/');
-
 ```
 
 
@@ -90,25 +87,35 @@ console.log('Server ' + process.pid + ' running at http://127.0.0.1:1337/');
 powered by `process.send()` and `worker.send()`. This mechanism is also exposed to application code in mobster processes.
 
 To send a message to all processes, do:
+```javascript
     require('mob')
         .send( myobj );
+```
 
 To send a message to all `back` processes, you could:
+```javascript
     require('mob')
         .all('back').send( myobj );
+```
 
 To send a message to a random `back` processes:
+```javascript
     require('mob')
         .any('back').send( myobj );
+```
 
 Finally, to target a particular process by `pid`, do:
+```javascript
     require('mob')
         .pid( somepid ).send( myobj );
+```
 
 To listen for messages:
+```javascript
     require('mob').on('message', handler);
+```
 
-Keep in mind that messages are 
+Keep in mind that messages are passed around as JSON, so this is only good for exchaning data.
 
 
 ### mobster export proxies
