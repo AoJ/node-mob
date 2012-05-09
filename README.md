@@ -84,35 +84,35 @@ console.log('Server ' + process.pid + ' running at http://127.0.0.1:1337/');
 ### exchanging messages
 
 `mob.require()` is built on a very simple message-exchange mechanism
-powered by `process.send()` and `worker.send()`. This mechanism is also exposed to application code in mobster processes.
+powered by `process.send()` and `worker.send()`. This mechanism is also exposed to application code in Mobster processes.
 
 To send a message to all processes, do:
 ```javascript
-    require('mob')
-        .send( myobj );
+require('mob')
+    .send( myobj );
 ```
 
 To send a message to all `back` processes, you could:
 ```javascript
-    require('mob')
-        .all('back').send( myobj );
+require('mob')
+    .all('back').send( myobj );
 ```
 
-To send a message to a random `back` processes:
+To send a message to a random `back` process:
 ```javascript
-    require('mob')
-        .any('back').send( myobj );
+require('mob')
+    .any('back').send( myobj );
 ```
 
 Finally, to target a particular process by `pid`, do:
 ```javascript
-    require('mob')
-        .pid( somepid ).send( myobj );
+require('mob')
+    .pid( somepid ).send( myobj );
 ```
 
 To listen for messages:
 ```javascript
-    require('mob').on('message', handler);
+require('mob').on('message', handler);
 ```
 
 Keep in mind that messages are passed around as JSON, so this is only good for exchaning data.
@@ -135,10 +135,10 @@ you should extract it in its own Mobster with only one worker.
 
 The `mob.require()` facility supports exchanging callbacks between processes, but two major limitations apply.
 
-First, currently a callback can be invoked only once, after which it is de-referenced
+First, currently **a callback can be invoked only once**, after which it is de-referenced
 and any further messages pushing data to that callback will be ignored.
 
-Also, make sure you do call back, because otherwise you will leak memory,
+Also, **make sure you do call back**, or else you will leak memory,
 as each callback is retained locally in the calling process and transported over to the other process
 as a numeric ID - and if you do not call back, this hard reference currently does not get collected.
 
