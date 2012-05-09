@@ -79,7 +79,7 @@ console.log('Server ' + process.pid + ' running at http://127.0.0.1:1337/');
 ```
 
 
-# how it works
+# mobsters!
 
 ### exchanging messages
 
