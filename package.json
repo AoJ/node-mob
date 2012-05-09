@@ -1,0 +1,15 @@
+{   "name" : "mob",
+    "version" : "0.0.1",
+    "description" : "simple multi-process applications",
+    "keywords" : [ "cluster", "child", "process", "message", "passing", "procfile" ],
+    "author" : "Hristo Dachev <tutini@gmail.com>",
+    "main" : "./index.js",
+    "bugs" : {
+        "mail" : "tutini@gmail.com",
+        "url" : "http://github.com/hdachev/node-mob/issues"
+    },
+    "repository" : {
+        "type" : "git",
+        "url" : "git://github.com/hdachev/node-mob.git"
+    }
+}
