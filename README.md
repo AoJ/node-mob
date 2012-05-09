@@ -11,7 +11,7 @@ which is in turn based on `child_process`.
 
 ### usage
 
-Mob defines two process types - the master, or Kingpin, and the children or **Mobsters**.
+A mob-based app runs as two or more processes - the Kingpin (master), and one or more Mobsters (workers).
 
 The **Kingpin**'s only function is to **keep the cluster running** by launching and reviving children,
 and to **route messages** between them. It should contain no application logic whatsoever,
