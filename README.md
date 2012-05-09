@@ -11,13 +11,13 @@ which is in turn based on `child_process`.
 
 ### usage
 
-Mob defines two process types - the master, or **Kingpin**, and the children or **Mobsters**.
+Mob defines two process types - the master, or Kingpin, and the children or **Mobsters**.
 
-The Kingpin's only function is to keep the cluster in good health by launching and reviving children,
-and to route messages between them. It should contain no application logic whatsoever,
+The **Kingpin**'s only function is to **keep the cluster running** by launching and reviving children,
+and to **route messages** between them. It should contain no application logic whatsoever,
 which is to ensure that bugs in your app don't end up crashing your server, but just temporarily break the affected child process.
 
-Mobsters are the actual workers that run your application logic.
+**Mobsters** are the actual workers that run your **application logic**.
 Mobsters can have different **roles**,
 so that you can break up your application into various worker types,
 each of which specializes in different functionality
@@ -94,7 +94,7 @@ you are not dealing with the `module.exports` object directly, but with a proxy.
 **Only functions are proxied**, any other exported properties are ignored.
 
 Mobster proxies created with `mob.require()` load-balance between workers,
-which means Mobster's exports are only good if they are stateless.
+which means Mobsters' exports are only good if they are stateless.
 If you want to reuse state,
 for example because you're using an in-process key/value store like node-dirty or divan,
 you should extract it in its own Mobster with only one worker.
@@ -104,4 +104,8 @@ Also, make sure you do call back, because otherwise you might run into some garb
 as each callback is retained locally in the calling process and transported over to the other process
 as a numeric ID - and if you do not call back, this hard reference currently does not get collected.
 
+
+### license
+
+MIT.
 
