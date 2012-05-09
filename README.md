@@ -1,13 +1,12 @@
 
 
-### mob
+# mob
 
 A simple toolkit for parallelizing node.js apps over several processes,
 built on top of the built-in `cluster` module,
 which is in turn based on `child_process`.
 
     $ npm install mob
-
 
 ### usage
 
@@ -87,7 +86,36 @@ console.log('Server ' + process.pid + ' running at http://127.0.0.1:1337/');
 ```
 
 
-### limitations
+# how it works
+
+### exchanging messages
+
+`mob.require()` is built on a very simple message-exchange mechanism
+powered by `process.send()` and `worker.send()`. This mechanism is also exposed to application code in mobster processes.
+
+To send a message to all processes, do:
+    require('mob')
+        .send( myobj );
+
+To send a message to all `back` processes, you could:
+    require('mob')
+        .all('back').send( myobj );
+
+To send a message to a random `back` processes:
+    require('mob')
+        .any('back').send( myobj );
+
+Finally, to target a particular process by `pid`, do:
+    require('mob')
+        .pid( somepid ).send( myobj );
+
+To listen for messages:
+    require('mob').on('message', handler);
+
+Keep in mind that messages are 
+
+
+### mobster export proxies
 
 `mob.require()` is not `require()` -
 you are not dealing with the `module.exports` object directly, but with a proxy.
@@ -99,13 +127,20 @@ If you want to reuse state,
 for example because you're using an in-process key/value store like node-dirty or divan,
 you should extract it in its own Mobster with only one worker.
 
-Callbacks as are supported, so long as each callback is invoked only once.
-Also, make sure you do call back, because otherwise you might run into some garbage collection issues,
+
+### passing callbacks
+
+The `mob.require()` facility supports exchanging callbacks between processes, but two major limitations apply.
+
+First, currently a callback can be invoked only once, after which it is de-referenced
+and any further messages pushing data to that callback will be ignored.
+
+Also, make sure you do call back, because otherwise you will leak memory,
 as each callback is retained locally in the calling process and transported over to the other process
 as a numeric ID - and if you do not call back, this hard reference currently does not get collected.
 
 
-### license
+# license
 
 MIT.
 
