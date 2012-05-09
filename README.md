@@ -2,9 +2,7 @@
 
 # mob
 
-A simple toolkit for parallelizing node.js apps over several processes,
-built on top of the built-in `cluster` module,
-which is in turn based on `child_process`.
+A simple toolkit for parallelizing node.js apps over several processes, built on top of the `cluster` module.
 
     $ npm install mob
 
@@ -17,12 +15,10 @@ and to **route messages** between them. It should contain no application logic w
 which is to ensure that bugs in your app don't end up crashing your server, but just temporarily break the affected child process.
 
 **Mobsters** are the actual workers that run your **application logic**.
-Mobsters can have different **roles**,
-so that you can break up your application into various worker types,
-each of which specializes in different functionality
-and exports in to the cluster just like a CommonJS module exports its API.
+Mobsters have different **roles**, so the application breaks down in several worker types,
+each of which specializes in different functionality, and exports it to the cluster just like a CommonJS module exports its API.
 
-The main script of a mob-based app looks like this:
+The main script will look like this:
 
 **main.js**
 ```javascript
@@ -36,16 +32,16 @@ require('mob')
   //  - the module to require in child processes assigned with this role;
   //  - any options, currently only the number of worker processes to spin up and keep alive.
 
-    .role('back',  "./background-jobs.js", {workers: 4})
+    .role('back',  "./background-worker.js", {workers: 4})
     .role('front', "./http-server.js", {workers: 2});
 
 ```
 
-`$ node main` will launch this script in a master process,
-which in turn launches 6 specialized child processes,
-4 for some expensive background job and 2 frontend processes.
+`$ node main` will launch this script in as a Kingpin,
+which in turn will launch the 6 specialized child processes,
+in this case 4 background workers and 2 frontend processes.
 
-**background-jobs.js**
+**background-worker.js**
 ```javascript
 
 console.log('Background worker ' + process.pid + ' running.' );

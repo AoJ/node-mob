@@ -9,6 +9,6 @@ require('mob')
   //  - the module to require in child processes assigned with this role;
   //  - any options, currently only the number of worker processes to spin up and keep alive.
 
-    .role('back',  "./background-jobs.js", {workers: 4})
+    .role('back',  "./background-worker.js", {workers: 4})
     .role('front', "./http-server.js", {workers: 2});
 
