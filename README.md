@@ -49,6 +49,17 @@ which in turn launches 6 specialized child processes,
 **background-jobs.js**
 ```javascript
 
+console.log('Background worker ' + process.pid + ' running.' );
+
+exports.foo = function () {
+  console.log('Bar! My pid is ' + process.pid);
+};
+
+```
+
+**http-server.js**
+```javascript
+
 var mob = require('mob');
 
 //  Get a remoting proxy to the 'back' role's interface.
